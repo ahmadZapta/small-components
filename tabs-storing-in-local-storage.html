@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storing tabs in local storage</title>
+</head>
+<body>
+    
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize tabs for the first set
+            initializeTabs('pills-tab_1', 'pills-tabContent_1');
+            initializeTabs('pills-tab_2', 'updateTransaction');
+            initializeTabs('pills-tab_3', 'pills-tabContent_3');
+            initializeTabs('pills-tab_4', 'pills-tabContent_4');
+            initializeTabs('contact-tabs', 'contact-tabsContent');
+
+
+            function initializeTabs(tabId, contentId) {
+                $('#' + tabId + ', #' + contentId).hide();
+
+                var activeTabIndex = localStorage.getItem(tabId + '-activeTabIndex');
+
+                if (activeTabIndex !== null) {
+                    $('#' + tabId + ' li:eq(' + activeTabIndex + ') button').tab('show');
+                }
+
+                $('#' + tabId + ', #' + contentId).show();
+
+                $('#' + tabId + ' button[data-bs-toggle="pill"]').on('click', function() {
+                    var tabIndex = $(this).parent().index();
+                    localStorage.setItem(tabId + '-activeTabIndex', tabIndex);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
